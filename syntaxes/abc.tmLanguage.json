@@ -1,0 +1,138 @@
+{
+  "scopeName": "source.abc",
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Abc",
+  "patterns": [
+    { "include": "#keywords" },
+    { "include": "#strings" },
+    { "include": "#comments-block" },
+    { "include": "#comments-line" },
+    { "include": "#var_declaration" }
+  ],
+  "repository": {
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.java",
+          "match": "\\b(if|while|for|return)\\b"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "include": "#strings-double"
+        },
+        {
+          "include": "#strings-single"
+        }
+      ],
+      "repository": {
+        "strings-double": {
+          "name": "string.quoted.double.abc",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "include": "#escape-character"
+            }
+          ]
+        },
+        "strings-single": {
+          "name": "string.quoted.single.abc",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "include": "#escape-character"
+            }
+          ]
+        }
+      }
+    },
+    "comments-block": {
+      "name": "meta.embedded.block.javascript comment.block.abc",
+      "begin": "/\\*",
+      "end": "\\*/",
+      "patterns": [
+        {
+          "include": "#escape-character"
+        }
+      ]
+    },
+    "comments-line": {
+      "name": "meta.embedded.line.double-slash.javascript comment.line.double-slash.abc",
+      "begin": "//",
+      "end": "\n",
+      "patterns": [
+        {
+          "include": "#escape-character"
+        }
+      ]
+    },
+    "escape-character": {
+      "patterns": [
+        {
+          "name": "constant.character.escape.abc",
+          "match": "\\\\.",
+          "comment": "「バックスラッシュ＋なんでも1文字」でエスケープを定義"
+        }
+      ]
+    },
+    "var_declaration": {
+      "patterns": [
+        {"include": "#var"},
+        {"include": "#var_name"},
+        {"include": "#var_type"},
+        {"include": "#assignment"},
+        {"include": "#constants"}
+      ],
+      "repository": {
+        "var": {
+          "patterns": [
+            {"match": "\\b(var|val)\\b", "name": "storage.type.abc"}
+          ]
+        },
+        "var_name": {
+          "patterns": [
+            {
+              "match": "\\b([^0-9][a-zA-Z0-9]+)\\s*:",
+              "captures": {
+                "1": {"name": "variable.name.abc"}
+              }
+            }
+          ]
+        },
+        "var_type": {
+          "patterns": [
+            {"match": "\\b(int|float|string)\\b", "name": "storage.type.abc"}
+          ]
+        },
+        "assignment": {
+          "patterns": [
+            {
+              "match": "=",
+              "name": "keyword.operator.assignment.abc"
+            }
+          ]
+        },
+        "constants": {
+          "patterns": [
+            {"include": "#constant_numeric"},
+            {"include": "#strings"}
+          ],
+          "repository": {
+            "constant_numeric": {
+              "patterns": [
+                {
+                  "match": "-?[0-9]+",
+                  "name": "constant.numeric.integer.abc"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

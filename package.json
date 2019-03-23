@@ -1,0 +1,39 @@
+{
+  "name": "abc-lang",
+  "displayName": "Abc Lang",
+  "description": "Syntax highlighting for abc lang",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.31.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "abc",
+        "aliases": ["Abc", "abc"],
+        "extensions": [".abc"],
+        "firstLine": "^#!\\s*/.*\\babc\\b",
+        "comment": "シェバン",
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "abc",
+        "scopeName": "source.abc",
+        "path": "./syntaxes/abc.tmLanguage.json",
+        "embeddedLanguages": {
+          "meta.embedded.block.javascript": "source.js"
+        }
+      },
+      {
+        "injectTo": ["source.abc"],
+        "scopeName": "todo-comment.injection",
+        "path": "./syntaxes/injection.json"
+      }
+    ]
+  }
+}
